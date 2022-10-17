@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_api_example/models/api_model.dart';
+import 'package:flutter_api_example/secondPage.dart';
 import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
@@ -33,20 +34,31 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
       ),
       body: Center(
-        child: Expanded(
-          child: FutureBuilder(
-              future: getPostApi(),
-              builder: ((context, snapshot) {
-                if (!snapshot.hasData) {
-                  return Text('Loading.....');
-                } else {
-                  return ListView.builder(
-                      itemCount: apiList.length,
-                      itemBuilder: ((context, index) {
-                        return Text(apiList[index].title.toString());
-                      }));
-                }
-              })),
+        child: Column(
+          children: [
+            Expanded(
+              child: FutureBuilder(
+                  future: getPostApi(),
+                  builder: ((context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return Text('Loading.....');
+                    } else {
+                      return ListView.builder(
+                          itemCount: apiList.length,
+                          itemBuilder: ((context, index) {
+                            return Text(apiList[index].title.toString());
+                          }));
+                    }
+                  })),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SecondPage()));
+              },
+              child: Text('Image Model'),
+            )
+          ],
         ),
       ),
     );
